@@ -18,7 +18,7 @@ class CreatePortalActivity : AppCompatActivity() {
         setContentView(R.layout.activity_create_portal)
         initViews()
 
-       btnAddPortal.setOnClickListener { onAddNewPortal() }
+        btnAddPortal.setOnClickListener { onAddNewPortal() }
     }
 
     private fun initViews() {
@@ -40,6 +40,11 @@ class CreatePortalActivity : AppCompatActivity() {
 
     //Adds a new portal
     private fun onAddNewPortal() {
+        if (!etUrl.text.toString().startsWith("http://")) {
+            Toast.makeText(this, "Url needs to start with http://", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         if (etTitle.text.toString().isNotBlank() && etUrl.text.toString().isNotBlank()) {
             val newPortal = Portal(etTitle.text.toString(), etUrl.text.toString())
             val resultIntent = Intent()

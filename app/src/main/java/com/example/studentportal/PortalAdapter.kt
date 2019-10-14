@@ -6,6 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_portal.view.*
+import androidx.core.content.ContextCompat.startActivity
+import android.content.Intent
+import android.net.Uri
+import androidx.core.content.ContextCompat.startActivity
+
 
 public class PortalAdapter(private val portals: List<Portal>) :
     RecyclerView.Adapter<PortalAdapter.ViewHolder>() {
@@ -28,10 +33,18 @@ public class PortalAdapter(private val portals: List<Portal>) :
     }
 
     inner class ViewHolder(itemView: View) :
-            RecyclerView.ViewHolder(itemView){
-        fun bind(portal: Portal){
+        RecyclerView.ViewHolder(itemView) {
+        fun bind(portal: Portal) {
             itemView.tvPortalName.text = portal.name
             itemView.tvPortalUrl.text = portal.url
+
+            itemView.setOnClickListener { openUrl(portal) }
         }
+    }
+
+    // Opens url in browser
+    private fun openUrl(portal: Portal) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(portal.url))
+        context.startActivity(browserIntent)
     }
 }
